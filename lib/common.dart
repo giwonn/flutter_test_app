@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 Future<dynamic> callApi(String path, [params, method]) async {
   final isGet = ((method ?? 'get') == 'get');
   final options = {
-    'method': method ?? 'get',
-    'url': '//localhost:4000/api/$path',
+    // 'method': method ?? 'get',
+    // 'url': '//localhost:4000/api/$path',
     'params': isGet ? params ?? {} : 'undefined',
     'data': !isGet ? params ?? {} : 'undefined',
     'withCredentials': true,
