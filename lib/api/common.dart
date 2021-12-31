@@ -21,14 +21,22 @@ Future<dynamic> callApi(String path, [params, method]) async {
   // );
 
   // final url = Uri.https('localhost:4000', '/api/$path', options);
-  // 10.90.9.68 -> 기기로 직접 돌리면 localhost가 기기 자체를 가리킴. 제대로 테스트할 때에는 직접 주소 작성해주어야함
-  final url = Uri.http('localhost:4000', '/api/$path', params);
+  String unencodedPath = '/api/v1';
+  int port = 3000;
+
+  if (path == 'session/login_info') {
+    port = 4000;
+    unencodedPath = '/api';
+  }
+  // debugPrint('localhost:$port$unencodedPath/$path');
+
+  final url = Uri.http('localhost:$port', '$unencodedPath/$path', params);
   http.Response response = await http.get(url);
 
   if (response.statusCode != 200) {
     debugPrint("Request failed with status: ${response.statusCode}.");
   } else {
-    Map<String, dynamic> res = jsonDecode(response.body);
+    final res = jsonDecode(response.body);
     return res;
   }
 }
